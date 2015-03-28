@@ -14,6 +14,7 @@ class SandboxController < ActionController::Base
     logger.info "rollback transaction #{ActiveRecord::Base.connection.current_transaction}"
     ActiveRecord::Base.connection.rollback_transaction
     ActiveRecord::FixtureSet.reset_cache
+    Rails.cache.clear
 
     render :text => 'rollback successfully'
   end
