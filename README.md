@@ -16,6 +16,14 @@ And then execute:
 
 ## Usage
 
+### Setup
+
+Add this line to config/routes.rb
+
+```ruby
+  mount RailsSandboxServer::Engine => '/sandbox'
+```
+
 ### Load Fixture
 
 ```sh
