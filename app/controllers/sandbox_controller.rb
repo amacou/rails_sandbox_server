@@ -3,8 +3,10 @@ require 'find'
 
 class SandboxController < ActionController::Base
   def setup
-    fixtures = Array[params[:fixture]]
-    ActiveRecord::FixtureSet.create_fixtures(fixture_path, fixtures)
+    fixtures = Array.wrap(params[:fixture] || params[:fixtures])
+    path = params[:fixtures_dir] || fixture_path
+
+    ActiveRecord::FixtureSet.create_fixtures(path, fixtures)
 
     render :text => 'fixture load successfully'
   end
