@@ -7,11 +7,15 @@ class SandboxController < ActionController::Base
     fixtures = Array.wrap(params[:fixture] || params[:fixtures])
     path = params[:fixtures_dir] || fixture_path
 
-    ActiveRecord::FixtureSet.create_fixtures(path, fixtures)
+    class_mapping = params[:mapping] || {}
+    class_mapping.each do |k, v|
+      class_mapping[k] = v.classify.constantize
+    end
+
+    ActiveRecord::FixtureSet.create_fixtures(path, fixtures, class_mapping)
 
     render text: 'fixture load successfully'
   end
-
 
   def rollback
     logger.info "rollback transaction #{ActiveRecord::Base.connection.current_transaction}"
