@@ -3,6 +3,13 @@ require 'find'
 require 'base64'
 
 class SandboxController < ActionController::Base
+  rescue_from StandardError do |exception|
+    puts exception
+    puts exception.backtrace
+
+    render text: exception, status: 500
+  end
+
   def setup
     fixtures = Array.wrap(params[:fixture] || params[:fixtures])
     path = params[:fixtures_dir] || fixture_path
