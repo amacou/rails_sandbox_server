@@ -8,7 +8,7 @@ class SandboxController < ActionController::Base
 
     ActiveRecord::FixtureSet.create_fixtures(path, fixtures)
 
-    render :text => 'fixture load successfully'
+    render text: 'fixture load successfully'
   end
 
 
@@ -18,7 +18,7 @@ class SandboxController < ActionController::Base
     ActiveRecord::FixtureSet.reset_cache
     Rails.cache.clear
 
-    render :text => 'rollback successfully'
+    render text: 'rollback successfully'
   end
 
   private
