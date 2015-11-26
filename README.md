@@ -54,6 +54,13 @@ or send fixtures_dir
 $ curl -X POST http://127.0.0.1:3000/sandbox/setup -d "fixture=articles&fixtures_dir=/Users/amacou/fixtures"
 ```
 
+if you'd like to load fixture as another class. use `mapping` parameter
+
+```ruby
+# ex) load Article from another_articles.yml
+$ curl -X POST http://127.0.0.1:3000/sandbox/setup -d "fixture=another_articles&fixtures_dir=/Users/amacou/fixtures&mapping[another_articles]=Article"
+```
+
 ### Rollback
 
 ```sh
