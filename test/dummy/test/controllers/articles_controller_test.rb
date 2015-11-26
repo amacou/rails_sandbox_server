@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ArticlesControllerTest < ActionController::TestCase
+  fixtures :articles
+
   setup do
     @article = articles(:one)
   end
