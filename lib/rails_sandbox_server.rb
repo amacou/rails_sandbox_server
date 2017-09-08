@@ -6,8 +6,7 @@ class ActionController::Base
 
   def sandbox_begin_transaction
     unless ActiveRecord::Base.connection.transaction_open?
-      ActiveRecord::Base.connection.begin_transaction(joinable: false)
-      logger.info "begin transaction #{ActiveRecord::Base.connection.current_transaction}"
+      ActiveRecord::Base.connection.begin_db_transaction
     end
   end
 end

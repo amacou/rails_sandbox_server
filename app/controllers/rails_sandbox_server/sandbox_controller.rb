@@ -1,13 +1,13 @@
 require 'active_record/fixtures'
 require 'find'
 require 'base64'
+
 module RailsSandboxServer
   class SandboxController < ActionController::Base
     rescue_from StandardError do |exception|
       puts exception
       puts exception.backtrace
-
-      render text: exception, status: 500
+      render plain: exception, status: 500
     end
 
     def setup
@@ -21,23 +21,22 @@ module RailsSandboxServer
 
       ActiveRecord::FixtureSet.create_fixtures(path, fixtures, class_mapping)
 
-      render text: 'fixture load successfully'
+      render plain: 'fixture load successfully'
     end
 
     def rollback
-      logger.info "rollback transaction #{ActiveRecord::Base.connection.current_transaction}"
-      ActiveRecord::Base.connection.rollback_transaction
+      ActiveRecord::Base.connection.rollback_db_transaction
       ActiveRecord::FixtureSet.reset_cache
       Rails.cache.clear
 
-      render text: 'rollback successfully'
+      render plain: 'rollback successfully'
     end
 
     def execute
       code = Base64.decode64(params[:code])
       result = eval(code)
 
-      render text: result
+      render plain: result
     end
 
     private
